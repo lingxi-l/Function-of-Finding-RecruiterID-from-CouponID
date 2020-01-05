@@ -1,0 +1,17 @@
+---
+title: "Function of finding recruiterID from couponID"
+subtitle: "Respondent Driven Sampling (RDS) Data"
+author: "Lingxi Li"
+date: "1/5/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction of RDS data
+
+## Coupon ID
+
+## Recruiter ID
