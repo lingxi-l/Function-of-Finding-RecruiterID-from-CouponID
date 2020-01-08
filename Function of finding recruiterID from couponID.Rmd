@@ -10,8 +10,30 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Introduction of RDS data
+## Introduction of Respondent Driven Sampling (RDS) data
+"Seeds" are selected by researcher as the first wave respondents. Then seeds will be given certain number of coupons and use those coupons to recruit people they know that are eligible for a particular survey. Data collected in this way is so-called respondent driven sampling data.
 
 ## Coupon ID
+Coupon ID, which is also denoted as coupon number, is the unique number of coupon.
+In RDS data-set, usually there is two types of coupon ID. The first one is coupon used, which is the unique ID of coupon repondent used to participate the survey. In other words, that respondent is recruited with that coupon. The sencond type is coupon distributed, which is coupon distributed by researchers to respondents. Then respondents need to use the coupon distributed to them to recruit others.
 
 ## Recruiter ID
+Sometimes RDS data-set only contains two types of coupon ID mentioned above, not recruiter ID. But when visualizing RDS recruitment chain or using RDS package in R to conduct analysis, recruiter ID is essential.
+
+## Function to get recruiter ID from coupon ID
+```{r}
+#COUPONi (i=1,2,3,...) is the coupon number of the first coupon distributed to that respondent
+#In this example, there are 3 coupons at most distributed to each respondent
+Recruiter_Num <- function(data){
+  data$X <- 1:nrow(data)
+  id1 = match(data$COUPON, data$COUPON1, nomatch = 0, incomparables=NA)
+  id2 = match(data$COUPON, data$COUPON2, nomatch = 0, incomparables=NA)
+  id3 = match(data$COUPON, data$COUPON3, nomatch = 0, incomparables=NA)
+  id = id1+id2+id3
+  id[id == 0] = NA
+  return(data$X[id])
+}
+
+data$recruiterid <- Recruiter_Num(data)
+```
+
